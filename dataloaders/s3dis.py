@@ -14,7 +14,7 @@ class S3DISDataset(object):
         self.classes = 13
         # self.class2type = {0:'ceiling', 1:'floor', 2:'wall', 3:'beam', 4:'column', 5:'window', 6:'door', 7:'table',
         #                    8:'chair', 9:'sofa', 10:'bookcase', 11:'board', 12:'clutter'}
-        class_names = open(os.path.join(os.path.dirname(data_path), 'meta', 's3dis_classnames.txt')).readlines()
+        class_names = open(os.path.join(os.path.dirname(os.path.dirname(data_path)), 'meta', 's3dis_classnames.txt')).readlines()
         self.class2type = {i: name.strip() for i, name in enumerate(class_names)}
         print(self.class2type)
         self.type2class = {self.class2type[t]: t for t in self.class2type}

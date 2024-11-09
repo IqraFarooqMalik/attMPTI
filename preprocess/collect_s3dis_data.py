@@ -94,7 +94,7 @@ if __name__ == '__main__':
             # Note: there is an extra character in the v1.2 data in Area_5/hallway_6. It's fixed manually.
             anno_path = os.path.join(scene_path, "Annotations")
             print(anno_path)
-            elements = scene_path.split('/')
+            elements = os.path.normpath(scene_path).split(os.sep)
             out_filename = '{}_{}.npy'.format(elements[-2], elements[-1]) # Area_1_hallway_1.npy
             try:
                 collect_point_label(anno_path, os.path.join(SAVE_PATH, out_filename))
