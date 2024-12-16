@@ -117,7 +117,7 @@ def pretrain(args):
     logger.cprint('=== Pre-train Dataset (classes: {0}) | Train: {1} blocks | Valid: {2} blocks ==='.format(
                                                      CLASSES, len(TRAIN_DATASET), len(VALID_DATASET)))
 
-    TRAIN_LOADER = DataLoader(TRAIN_DATASET, batch_size=args.batch_size, num_workers=args.n_workers, shuffle=True,
+    TRAIN_LOADER = DataLoader(TRAIN_DATASET, batch_size=args.batch_size, num_workers=0, shuffle=True,
                               drop_last=True)
 
     VALID_LOADER = DataLoader(VALID_DATASET, batch_size=args.batch_size, num_workers=args.n_workers, shuffle=False,
@@ -141,7 +141,7 @@ def pretrain(args):
     best_iou = 0
     global_iter = 0
     for epoch in range(args.n_iters):
-        mode.train()
+        model.train()
         for batch_idx, (ptclouds, labels) in enumerate(TRAIN_LOADER):
             if torch.cuda.is_available():
                 ptclouds = ptclouds.cuda()
