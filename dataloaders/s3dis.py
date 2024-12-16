@@ -38,7 +38,14 @@ class S3DISDataset(object):
         self.class2scans = self.get_class2scans()
 
     def get_class2scans(self):
-        class2scans_file = os.path.join(self.data_path, 'class2scans.pkl')
+        # class2scans_file = os.path.join(self.data_path, 'class2scans.pkl')
+        # Construct the path to class2scans.pkl file
+        class2scans_path = os.path.join(self.data_path,'class2scans.pkl')
+
+        # Normalize the path to ensure correct slashes
+        class2scans_file = os.path.normpath(class2scans_path)
+
+
         if os.path.exists(class2scans_file):
             #load class2scans (dictionary)
             with open(class2scans_file, 'rb') as f:
@@ -48,7 +55,7 @@ class S3DISDataset(object):
             min_pts = 100  # to filter out scans with only rare labelled points
             class2scans = {k:[] for k in range(self.classes)}
 
-            for file in glob.glob(os.path.join(self.data_path, 'data', '*.npy')):
+            for file in glob.glob(os.path.join(self.data_path, 'blocks_bs1_s1', 'data', '*.npy')):
                 scan_name = os.path.basename(file)[:-4]
                 data = np.load(file)
                 labels = data[:,6].astype(np.int)

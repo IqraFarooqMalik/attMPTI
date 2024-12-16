@@ -1,0 +1,23 @@
+Installation:
+.\myenv\Scripts\Activate
+pip install torch
+pip install torch-cluster -f https://data.pyg.org/whl/torch-2.5.1+cpu.html
+pip install faiss-cpu
+pip install tensorboard h5py transforms3d
+
+1. Activate venv:
+.\myenv\Scripts\Activate
+
+2. Preprocess:
+cd ./preprocess
+python collect_s3dis_data.py --data_path "D:\HPI\Winter Semester 25\SDPVT\TEST PROJECTS\few-shot-3d-point-cloud-semantic-segmentation\attMPTI\datasets\S3DIS\Stanford3dDataset_v1.2"
+
+3. Convert to blocks:
+cd ..
+python ./preprocess/room2blocks.py --data_path ./datasets/S3DIS/scenes/
+
+4. Pretrain:
+bash scripts/pretrain_segmentor.sh
+
+5. Train:
+bash scripts/train_attMPTI.sh
