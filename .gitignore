@@ -1,0 +1,13 @@
+venv3.6.8/
+datasets/S3DIS/scenes
+datasets/S3DIS/Stanford3dDataset_v1.2
+utils/__pycache__/
+models/__pycache__/
+runs/__pycache__/
+dataloaders/__pycache__/
+myenv/
+datasets
+.vscode/
+log_s3dis/
+attmpti-env/
+attmpti39/
