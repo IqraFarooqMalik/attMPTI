@@ -6,8 +6,10 @@ models/__pycache__/
 runs/__pycache__/
 dataloaders/__pycache__/
 myenv/
-datasets/
+datasets
 .vscode/
 log_s3dis/
+attmpti-env/
+attmpti39/
 
 
