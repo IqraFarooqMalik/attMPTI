@@ -74,9 +74,16 @@ def metric_evaluate(predicted_label, gt_label, NUM_CLASS):
     iou_list = []
 
     for i in range(NUM_CLASS):
-        iou_class = true_positive_classes[i] / float(gt_classes[i]+positive_classes[i]-true_positive_classes[i])
+        denominator = gt_classes[i] + positive_classes[i] - true_positive_classes[i]
+        
+        if denominator == 0:
+            iou_class = 0.0  # Assign 0 IoU if the denominator is zero
+        else:
+            iou_class = true_positive_classes[i] / float(denominator)
+
         print('Class_%d: iou_class is %f' % (i, iou_class))
         iou_list.append(iou_class)
+
 
     mean_IoU = np.array(iou_list[1:]).mean()
 
@@ -141,7 +148,7 @@ def pretrain(args):
     best_iou = 0
     global_iter = 0
     for epoch in range(args.n_iters):
-        mode.train()
+        model.train()
         for batch_idx, (ptclouds, labels) in enumerate(TRAIN_LOADER):
             if torch.cuda.is_available():
                 ptclouds = ptclouds.cuda()

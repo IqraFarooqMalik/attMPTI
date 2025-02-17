@@ -11,10 +11,12 @@ import pickle
 class S3DISDataset(object):
     def __init__(self, cvfold, data_path):
         self.data_path = data_path
+        print('data path', self.data_path)
         self.classes = 13
         # self.class2type = {0:'ceiling', 1:'floor', 2:'wall', 3:'beam', 4:'column', 5:'window', 6:'door', 7:'table',
         #                    8:'chair', 9:'sofa', 10:'bookcase', 11:'board', 12:'clutter'}
-        class_names = open(os.path.join(os.path.dirname(data_path), 'meta', 's3dis_classnames.txt')).readlines()
+        print('data path2', os.path.join(self.data_path,'s3dis_classnames.txt'))
+        class_names = open(os.path.join(self.data_path,'s3dis_classnames.txt')).readlines()
         self.class2type = {i: name.strip() for i, name in enumerate(class_names)}
         print(self.class2type)
         self.type2class = {self.class2type[t]: t for t in self.class2type}
@@ -51,7 +53,7 @@ class S3DISDataset(object):
             for file in glob.glob(os.path.join(self.data_path, 'data', '*.npy')):
                 scan_name = os.path.basename(file)[:-4]
                 data = np.load(file)
-                labels = data[:,6].astype(np.int)
+                labels = data[:,6].astype(int)
                 classes = np.unique(labels)
                 print('{0} | shape: {1} | classes: {2}'.format(scan_name, data.shape, list(classes)))
                 for class_id in classes:

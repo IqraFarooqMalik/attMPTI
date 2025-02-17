@@ -58,7 +58,7 @@ def sample_pointcloud(data_path, num_point, pc_attribs, pc_augm, pc_augm_config,
     data = data[sampled_point_inds]
     xyz = data[:, 0:3]
     rgb = data[:, 3:6]
-    labels = data[:,6].astype(np.int)
+    labels = data[:,6].astype(int)
 
     xyz_min = np.amin(xyz, axis=0)
     xyz -= xyz_min
@@ -166,19 +166,19 @@ class MyDataset(Dataset):
                                             valid_query_labels = self.generate_one_episode(sampled_valid_classes)
 
             return support_ptclouds.astype(np.float32), \
-                   support_masks.astype(np.int32), \
+                   support_masks.astype(int32), \
                    query_ptclouds.astype(np.float32), \
                    query_labels.astype(np.int64), \
                    valid_support_ptclouds.astype(np.float32), \
-                   valid_support_masks.astype(np.int32), \
+                   valid_support_masks.astype(int32), \
                    valid_query_ptclouds.astype(np.float32), \
-                   valid_query_labels.astype(np.int64)
+                   valid_query_labels.astype(int64)
         else:
             return support_ptclouds.astype(np.float32), \
-                   support_masks.astype(np.int32), \
+                   support_masks.astype(int32), \
                    query_ptclouds.astype(np.float32), \
-                   query_labels.astype(np.int64), \
-                   sampled_classes.astype(np.int32)
+                   query_labels.astype(int64), \
+                   sampled_classes.astype(int32)
 
 
     def generate_one_episode(self, sampled_classes):
@@ -300,7 +300,7 @@ def batch_test_task_collate(batch):
     batch_support_ptclouds, batch_support_masks, batch_query_ptclouds, batch_query_labels, batch_sampled_classes = batch[0]
 
     data = [torch.from_numpy(batch_support_ptclouds).transpose(2,3), torch.from_numpy(batch_support_masks),
-            torch.from_numpy(batch_query_ptclouds).transpose(1,2), torch.from_numpy(batch_query_labels.astype(np.int64))]
+            torch.from_numpy(batch_query_ptclouds).transpose(1,2), torch.from_numpy(batch_query_labels.astype(int64))]
 
     return data, batch_sampled_classes
 
@@ -369,4 +369,4 @@ class MyPretrainDataset(Dataset):
         ptcloud, label = sample_pointcloud(self.data_path, self.num_point, self.pc_attribs, self.pc_augm,
                                            self.pc_augm_config, block_name, self.classes, random_sample=True)
 
-        return torch.from_numpy(ptcloud.transpose().astype(np.float32)), torch.from_numpy(label.astype(np.int64))
+        return torch.from_numpy(ptcloud.transpose().astype(np.float32)), torch.from_numpy(label.astype(int))
